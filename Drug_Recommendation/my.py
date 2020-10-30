@@ -45,12 +45,12 @@ root.mainloop()
 root2 = tk.Tk()
 root2.configure(background="#263D42")
 
-"""
-root2.title("Training")
-canvas = tk.Canvas(root2, height=100, width=700, bg="#263D42")
 
-canvas.pack()
-"""
+# root2.title("Training")
+# canvas = tk.Canvas(root2, height=100, width=700, bg="#263D42")
+
+# canvas.pack()
+
 df_train,df_test = md.files_input(dataset)
 md.visualization(df_train,df_test)
 df_all = md.preprocessing(df_train,df_test)
@@ -77,49 +77,45 @@ root2.title("Predictions")
 tp = ttk.Label(root2, text="                 ", background="#263D42")
 tp.grid(row=0, column=2, sticky=tk.W)
 
-Condition = ttk.Label(root2, text="Condition", background="#263D42")
+Condition = ttk.Label(root2, text="Condition", background="#263D42", foreground = '#FFFFFF')
 Condition.grid(row=2, column=0, sticky=tk.W)
 Condition_var = tk.StringVar()
 Condition_entrybox = ttk.Entry(root2, width=16, textvariable=Condition_var)
 Condition_entrybox.grid(row=2, column=1)
 
 # converting into dataframe
-DB = pd.DataFrame()
+# DB = pd.DataFrame()
 
 
-def action():
-    global DB
-    DF = pd.DataFrame(columns=['uniqueID', 'drugName', 'condition', 'rating', 'date', 'usefulCount'])
-    UNIQUEID = UniqueID_var.get()
-    DF.loc[0, 'uniqueID'] = UNIQUEID
-    DRUGNAME = DrugName_var.get()
-    DF.loc[0, 'drugName'] = DRUGNAME
-    CONDITION = Condition_var.get()
-    DF.loc[0, 'condition'] = CONDITION
-    RATING = Rating_var.get()
-    DF.loc[0, 'rating'] = RATING
-    DATE = Date_var.get()
-    DF.loc[0, 'date'] = DATE
-    USEFULCOUNT = UseFulCount_var.get()
-    DF.loc[0, 'usefulCount'] = USEFULCOUNT
-    DB = DF
-    DB["uniqueID"] = pd.to_numeric(DB["uniqueID"])
-    DB["rating"] = pd.to_numeric(DB["rating"])
-    DB["usefulCount"] = pd.to_numeric(DB["usefulCount"])
+# def action():
+    # global DB
+    # DF = pd.DataFrame(columns=['uniqueID', 'drugName', 'condition', 'rating', 'date', 'usefulCount'])
+    # UNIQUEID = UniqueID_var.get()
+    # DF.loc[0, 'uniqueID'] = UNIQUEID
+    # DRUGNAME = DrugName_var.get()
+    # DF.loc[0, 'drugName'] = DRUGNAME
+    # CONDITION = Condition_var.get()
+    # DF.loc[0, 'condition'] = CONDITION
+    # RATING = Rating_var.get()
+    # DF.loc[0, 'rating'] = RATING
+    # DATE = Date_var.get()
+    # DF.loc[0, 'date'] = DATE
+    # USEFULCOUNT = UseFulCount_var.get()
+    # DF.loc[0, 'usefulCount'] = USEFULCOUNT
+    # DB = DF
+    # DB["uniqueID"] = pd.to_numeric(DB["uniqueID"])
+    # DB["rating"] = pd.to_numeric(DB["rating"])
+    # DB["usefulCount"] = pd.to_numeric(DB["usefulCount"])
 
 
 def predict():
-	md.recommend(Condition)
-    # action()
-    """
-    predict on DB
-    """
-    # print(DB)
-    ans = tk.Tk()
-    ans.configure(background="#263D42")
-    classification = ttk.Label(ans, text="classification", background="#263D42")
-    classification.grid(row=5, column=0, sticky=tk.W)
-    ans.mainloop()
+	CONDITION = Condition_var.get()
+	best_drug = md.recommend(CONDITION,df_test)
+	ans = tk.Tk()
+	ans.configure(background="#263D42")
+	classification = ttk.Label(ans, text=best_drug, background="#263D42", foreground = '#FFFFFF')
+	classification.grid(row=5, column=0, sticky=tk.W)
+	ans.mainloop()
 
 
 submit_button = ttk.Button(root2, text="Submit", command=predict)
