@@ -314,8 +314,8 @@ def dict_sentiment_model(df_test,sub_preds):
 	df_test['total_pred'] = (df_test['machine_pred'] + df_test['sentiment_by_dic'])*df_test['usefulCount']
 	return df_test
 
-def recommend(cond):
+def recommend(cond,df_test):
     something = df_test[(df_test['condition']==cond)]
     some = something.groupby(['drugName']).agg({'total_pred':['mean']}).sort_values(by = ('total_pred','mean'),ascending = False)
-    print(some[:1])
+    return some[:1]
 
