@@ -318,4 +318,3 @@ def recommend(cond,df_test):
     something = df_test[(df_test['condition']==cond)]
     some = something.groupby(['drugName']).agg({'total_pred':['mean']}).sort_values(by = ('total_pred','mean'),ascending = False)
     return some[:1]
-

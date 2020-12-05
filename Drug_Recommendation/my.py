@@ -97,7 +97,7 @@ def predict():
 	ans_frame = tk.Frame(ans, bg = '#263D42')
 	ans_frame.pack(fill = tk.BOTH)
 
-	if best_drug and not best_drug.empty():
+	if not best_drug.empty:
 		eff_drug = best_drug
 	else:
 		eff_drug = 'No such ailment exist/No drug for your ailment. Reenter your ailment'
